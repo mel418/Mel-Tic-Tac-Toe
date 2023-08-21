@@ -1,53 +1,82 @@
-/* Add cute pink My Melody theme to your game */
 body {
-    font-family: "Arial", sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #ffd6e2; /* Light pink background */
-  }
-  
-header {
-  text-align: center;
-  margin-bottom: 20px;
+  background-color: #f8bbd0;
+  font-family: 'DM Sans', sans-serif;
+  font-family: 'Varela Round', sans-serif;
 }
-
+/* Center the game container */
 .game-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content horizontally */
-  justify-content: center; /* Center content vertically */
-  min-height: 100vh; /* Set minimum height to fill the viewport */
+  align-items: center;
+  justify-content: center;
+  /* min-height: 100vh; */
+  color: #ff6eaa; /* Pink color for text */
 }
 
+/* Style for the game status */
+.game-status {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: white;
+}
 
+/* Style for the game board */
 .gameboard {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
+  grid-template-columns: repeat(3, 150px);
   grid-gap: 5px;
 }
 
+/* Style for the squares */
 .square {
-  width: 100px;
-  height: 100px;
-  border: 2px solid #f48fb1; /* Dark pink border */
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 40px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border: 1px solid #ff6eaa;
   cursor: pointer;
-  background-color: #f8bbd0; /* Light pink cell background */
 }
 
-.restart-btn {
+.square:not(.marked):hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: url('https://wallpapercave.com/wp/wp10759550.jpg'); 
+  background-size: contain;
+  opacity: 0.6;
   
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #f48fb1; /* Dark pink button background */
+}
+
+/* Style for the restart button */
+.restart-btn {
+  background-color: #ff6eaa;
   color: white;
+  padding: 10px 20px;
+  margin-top: 20px;
   border: none;
+  border-radius: 5px;
+  font-size: 28px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.restart-btn:hover {
+  background-color: #ff5187; /* Lighter pink on hover */
+}
+
+/* Style for the header and h1 */
+header {
+  text-align: center;
+  margin-bottom: 15px;
+  background-color: white;
+  top: 0;
+}
+
+h1 {
+  color: #ff6eaa;
+  font-size: 64px;
+  margin: 0;
+  padding: 25px;
 }

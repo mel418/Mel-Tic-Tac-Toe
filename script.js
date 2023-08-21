@@ -60,23 +60,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameStatus = document.getElementById('current-player');
     const restartButton = document.getElementById('restart-btn');
 
+    let gameOver = false;
+
     const playerModule = gameModule;
     const gameBoard = playerModule.getGameBoard();
     const players = playerModule.getPlayers();
 
     function handleSquareClick(event) {
+        if (gameOver) return;
+
         const cellIndex = parseInt(event.target.dataset.cellIndex);
         console.log("Current Player:", playerModule.getCurrentPlayer());
         
         if(gameBoard[cellIndex] === '') {
             gameBoard[cellIndex] = players[playerModule.getCurrentPlayer()-1].marker;
+            event.target.classList.add('marked');
             renderGameBoard();
             
             if (playerModule.checkForWin(players[playerModule.getCurrentPlayer() - 1].marker)) {
                 gameStatus.textContent = players[playerModule.getCurrentPlayer()-1].name + ' wins!';
+                gameOver = true;
             }
             else if (playerModule.checkForTie()){
                 gameStatus.textContent = 'It\'s a tie!';
+                gameOver = true;
             }
             else {
                 playerModule.switchPlayer();
@@ -97,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     restartButton.addEventListener('click', function(){
+        gameOver = false;
         for (let i = 0; i < gameBoard.length; i++) {
             gameBoard[i] = '';
         }
