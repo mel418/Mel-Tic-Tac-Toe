@@ -1,7 +1,9 @@
+// Factory function to create a player object
 function createPlayer(name, marker) {
     return {name, marker};
 }
 
+// Game module using the revealing module pattern
 const gameModule = (function() {
     let currentPlayer = 1;
     const players = [
@@ -16,10 +18,12 @@ const gameModule = (function() {
         [0, 4, 8], [2, 4, 6]            // Diagonals
     ];
     
+    // Function to switch between players
     function switchPlayer() {
         currentPlayer = currentPlayer === 1 ? 2 : 1
     }
 
+    // Function to check for a win based on the player's marker
     function checkForWin(playerMarker) {
         for (const combination of winningCombinations) {
             if (combination.every(index => gameBoard[index] === playerMarker)) {
@@ -29,11 +33,12 @@ const gameModule = (function() {
         return false; 
     }
 
+    // Function to check for a tie by examining all cells
     function checkForTie() {
-        return gameBoard.every(cell => cell !== '');
+        return gameBoard.every(square => square !== '');
     }
 
-
+    // Public methods exposed by the game module
     return {
         getCurrentPlayer: function() {
             return currentPlayer;
@@ -60,12 +65,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameStatus = document.getElementById('current-player');
     const restartButton = document.getElementById('restart-btn');
 
+    // Flag to track if the game is over
     let gameOver = false;
 
+    // Initialize the game module and retrieve game data
     const playerModule = gameModule;
     const gameBoard = playerModule.getGameBoard();
     const players = playerModule.getPlayers();
 
+    // Function to handle a square being clicked
     function handleSquareClick(event) {
         if (gameOver) return;
 
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.target.classList.add('marked');
             renderGameBoard();
             
+            // Check for win or tie conditions
             if (playerModule.checkForWin(players[playerModule.getCurrentPlayer() - 1].marker)) {
                 gameStatus.textContent = players[playerModule.getCurrentPlayer()-1].name + ' wins!';
                 gameOver = true;
@@ -93,16 +102,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to update the displayed game board
     function renderGameBoard() {
         squares.forEach((square, index) =>{
             square.textContent = gameBoard[index];
         })
     }
 
+     // Attach event listeners to each square
     squares.forEach(square => {
         square.addEventListener('click', handleSquareClick);
     })
 
+    // Attach event listener to the restart button
     restartButton.addEventListener('click', function(){
         gameOver = false;
         for (let i = 0; i < gameBoard.length; i++) {
@@ -113,9 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
         squares.forEach(square => {
             square.textContent = '';
+            square.classList.remove('marked');
         })
         gameStatus.textContent = 'Player\'s Turn: ' + players[0].name;
     });
     
-    renderGameBoard();
+    renderGameBoard(); // Initialize the game board display
   });
